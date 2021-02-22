@@ -8,14 +8,14 @@ import { useState } from "react";
 export default function App(props) {
   const [notes, setNotes] = useState(props.notes);
   const [newNote, setNewNote] = useState("");
+  const [showAll, setShowAll] = useState("");
 
   const handleChange = (event) => {
     setNewNote(event.target.value);
   };
 
-  const handleClick = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    console.log("crear nota");
     const noteToAddToState = {
       id: notes.length + 1,
       content: newNote,
@@ -27,20 +27,29 @@ export default function App(props) {
     setNewNote("");
   };
 
+  const handleShowAll = () => {
+    setShowAll(() => !showAll)
+  }
   
   return (
     <div>
       <h1>Notes</h1>
+      <button onClick={handleShowAll}>{showAll ? "show only important" : "show all"}</button>
       <ol>
-        {notes.map((note) => (
+        {notes
+        .filter(note => {
+          if (showAll === true) return true;
+          return note.important === true;
+        })
+        .map((note) => (
           <Note key={note.id} {...note} />
         ))}
       </ol>
 
-      <div>
+      <form onSubmit={handleSubmit}>
         <input type="text" onChange={handleChange} value={newNote} />
-        <button onClick={handleClick}>crear nota</button>
-      </div>
+        <button>crear nota</button>
+      </form>
     </div>
   );
 };
