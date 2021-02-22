@@ -1,3 +1,4 @@
+
 //aplico destructuring assignment
 //ahora en una sola linea tenimos lo qye renderizamos antes
 //Esto no suele estar mal del Todo
@@ -11,10 +12,10 @@ export const Note = ({ categories = [], content, date }) => {
         <time>{date}</time>
       </small>
       {categories.map((category) => (
-	    <small key={category}>{category}</small>
-	    ))}
+        <small key={category}>{category}</small>
+      ))}
     </li>
   );
 };
 
-export const getNumber = () => 2;
+//export const getNumber = () => 2;

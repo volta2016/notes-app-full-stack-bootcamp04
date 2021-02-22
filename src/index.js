@@ -24,7 +24,6 @@ const notes = [
   }
 ];
 
-
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(<App notes={notes} />, rootElement);
