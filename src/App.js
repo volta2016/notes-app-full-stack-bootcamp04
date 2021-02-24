@@ -8,14 +8,22 @@ import { useEffect, useState } from "react";
 export default function App() {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
+    
+    console.log("useEffect")
+    setLoading(true)
+    setTimeout(() => {
+      console.log("ahora! setTimeOut")
+      fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
       .then((json) => {
-        console.log(json)
+        console.log("Setiando las notas de la Api")
+        setNotes(json)
+        setLoading(false)
       })
-    //console.log("useEffect");
+    }, 2000)
   }, []);
 
   function handleChange(event) {
@@ -34,9 +42,13 @@ export default function App() {
     setNewNote("");
   };
 
+  console.log("render!")
+  
+
   return (
     <div>
       <h1>Notes</h1>
+      {loading ? "estas cargando..." : ""}
       <ol>
         {notes.map((note) => (
           <Note key={note.id} {...note} />
